@@ -80,10 +80,24 @@ final class MicroPostController
     /**
      * @Route("/", name="micro_post_index")
      */
-    public function index(): Response
+    public function index(SecurityForGettingUser $security): Response
     {
+        $currentUser = $security->getUser();
+
+        if ($currentUser instanceof User) {
+            $posts = $this->microPostRepository->findAllByUsers(
+                $currentUser->getFollowing()
+            );
+        }
+        else {
+            $posts = $this->microPostRepository->findBy(
+                [],
+                ['time' => 'DESC']
+            );
+        }
+
         $html = $this->twig->render('micro-post/index.html.twig', [
-            'posts' => $this->microPostRepository->findBy([], ['time' => 'DESC'])
+            'posts' => $posts
         ]);
 
         return new Response($html);
