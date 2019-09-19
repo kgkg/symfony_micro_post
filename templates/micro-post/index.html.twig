@@ -7,18 +7,29 @@
         </div>
     {% endfor %}
 
-    <h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6>
+    {% if usersToFollow|length > 0 %}
+        <p>You currently fo not follow anyone, you might find these users interesting: </p>
 
-    {% for post in posts %}
-        {{ include('micro-post/raw-post.html.twig', {'post': post}) }}
+        {% for userToFollow in usersToFollow %}
+            <a href="{{ path('following_follow', {"id": userToFollow.id}) }}">
+                @{{ userToFollow.username }}
+            </a>
+        {% endfor %}
+    {% else %}
 
-        <small class="d-block text-right mt-3">
-            {% if is_granted('edit', post) %}
-                <a href="{{ path('micro_post_edit', {'id': post.id}) }}">Edit</a>
-            {% endif %}
-            {% if is_granted('delete', post) %}
-                <a href="{{ path('micro_post_delete', {'id': post.id}) }}">Delete</a>
-            {% endif %}
-        </small>
-    {% endfor %}
+        <h6 class="border-bottom border-gray pb-2 mb-0">Recent updates</h6>
+
+        {% for post in posts %}
+            {{ include('micro-post/raw-post.html.twig', {'post': post}) }}
+
+            <small class="d-block text-right mt-3">
+                {% if is_granted('edit', post) %}
+                    <a href="{{ path('micro_post_edit', {'id': post.id}) }}">Edit</a>
+                {% endif %}
+                {% if is_granted('delete', post) %}
+                    <a href="{{ path('micro_post_delete', {'id': post.id}) }}">Delete</a>
+                {% endif %}
+            </small>
+        {% endfor %}
+    {% endif %}
 {% endblock %}
