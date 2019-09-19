@@ -2,4 +2,24 @@
 
 {% block body %}
     {{ include('micro-post/raw-post.html.twig', {'post': post}) }}
+
+    {% set isLiked = post.likedBy.contains(app.user) %}
+
+    <div class="pt-2">
+        {# like button #}
+        <button style="display: {% if not isLiked %}block{% else %}none{% endif %}"
+                class="btn btn-outline-secondary btn-sm" id="like">Like
+            <span class="badge badge-light" id="likes-like">{{ post.getLikedBy.count }}</span>
+        </button>
+
+        {# unlike button #}
+        <button style="display: {% if isLiked %}block{% else %}none{% endif %}"
+                class="btn btn-outline-secondary btn-sm" id="unlike">Unlike
+            <span class="badge badge-light" id="likes-unlike">{{ post.getLikedBy.count }}</span>
+        </button>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+
 {% endblock %}
