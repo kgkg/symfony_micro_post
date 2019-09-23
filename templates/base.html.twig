@@ -5,6 +5,7 @@
     <title>{% block title %}Welcome!{% endblock %}</title>
     {% block stylesheets %}
         {{ encore_entry_link_tags('app') }}
+        <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"/>
     {% endblock %}
 </head>
 <body class="bg-light">
@@ -25,6 +26,14 @@
     <div class="order-2 order-md-1">
         <ul class="navbar-nav px-3">
             {% if is_granted('ROLE_USER') %}
+                <li class="nav-item text-nowrap border-right border-secondary">
+                    <a class="nav-link" href="{{ path('notification_all') }}">
+                        Notifications
+                        <span class="badge badge-light" id="notification-count">
+                            <i class="fa fa-circle fa-circle-o-notch fa-spin"></i>
+                        </span>
+                    </a>
+                </li>
                 <li class="nav-item text-nowrap">
                     <a class="nav-link"
                        href="#">{{ app.user.fullName }}</a>
@@ -53,6 +62,27 @@
 </main>
 {% block javascripts %}
     {{ encore_entry_script_tags('app') }}
+
+    {% if is_granted('ROLE_USER') %}
+        <script>
+            function fetchNotificationCount()
+            {
+                fetch(
+                    '{{ path('notification_unread') }}',
+                    {'credentials': 'include'}
+                ).then(function (response) {
+                    response.json().then(function (json) {
+                        document.getElementById('notification-count').innerText = json.count;
+                        setTimeout(fetchNotificationCount, 5000);
+                    });
+                }).catch(function (reason) {
+
+                });
+            }
+
+            fetchNotificationCount();
+        </script>
+    {% endif %}
 {% endblock %}
 </body>
 </html>
