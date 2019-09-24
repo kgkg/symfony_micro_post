@@ -21,7 +21,6 @@ security:
       # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
 
       form_login:
-
         check_path: security_login
         login_path: security_login
         csrf_token_generator: security.csrf.token_manager
@@ -29,6 +28,8 @@ security:
         #          always_use_default_target_path: false
         #          use_referer: true
         #          failure_path:
+
+      user_checker: App\Security\UserChecker
 
       logout:
         path: security_logout

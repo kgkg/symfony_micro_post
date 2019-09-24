@@ -95,6 +95,16 @@ class User implements UserInterface, Serializable
      */
     private $following;
 
+    /**
+     * @ORM\Column(type="string", nullable=true, length=30)
+     */
+    private $confirmationToken;
+
+    /**
+     * @ORM\Column(type="boolean")
+     */
+    private $enabled;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -102,6 +112,7 @@ class User implements UserInterface, Serializable
         $this->following = new ArrayCollection();
         $this->postsLiked = new ArrayCollection();
         $this->roles = [self::ROLE_USER];
+        $this->enabled = false;
     }
 
     public function getId(): ?int
@@ -190,13 +201,19 @@ class User implements UserInterface, Serializable
         return serialize([
             $this->id,
             $this->username,
-            $this->password
+            $this->password,
+            $this->enabled
         ]);
     }
 
     public function unserialize($serialized)
     {
-        list($this->id, $this->username, $this->password) = unserialize($serialized);
+        list(
+            $this->id,
+            $this->username,
+            $this->password,
+            $this->enabled
+            ) = unserialize($serialized);
     }
 
     public function getPlainPassword()
@@ -241,6 +258,26 @@ class User implements UserInterface, Serializable
     public function getPostsLiked(): Collection
     {
         return $this->postsLiked;
+    }
+
+    public function getConfirmationToken(): ?string
+    {
+        return $this->confirmationToken;
+    }
+
+    public function setConfirmationToken(string $confirmationToken): void
+    {
+        $this->confirmationToken = $confirmationToken;
+    }
+
+    public function isEnabled(): bool
+    {
+        return $this->enabled;
+    }
+
+    public function setEnabled(bool $enabled): void
+    {
+        $this->enabled = $enabled;
     }
 
 }

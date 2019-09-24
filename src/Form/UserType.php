@@ -37,7 +37,7 @@ final class UserType extends AbstractType
                 'constraints' => new IsTrue(),
                 'label' => 'I agree to the terms of service'
             ])
-            ->add('Register', SubmitType::class)
+            ->add('register', SubmitType::class)
         ;
     }
 
