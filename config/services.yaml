@@ -6,6 +6,7 @@
 parameters:
   locale: 'en'
   hello_message: 'Hello from service'
+  email_from: '%env(MAILER_FROM)%'
 
 services:
   # default configuration for services in *this* file
@@ -33,6 +34,10 @@ services:
   App\Twig\AppExtension:
     arguments:
       $locale: '%locale%'
+
+  App\Mailer\Mailer:
+    arguments:
+      $mailFrom: '%email_from%'
 
   App\EventListener\LikeNotificationSubscriber:
     tags:
