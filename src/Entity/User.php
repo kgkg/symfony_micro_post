@@ -105,6 +105,11 @@ class User implements UserInterface, Serializable
      */
     private $enabled;
 
+    /**
+     * @ORM\OneToOne(targetEntity="App\Entity\UserPreferences", cascade={"persist"})
+     */
+    private $preferences;
+
     public function __construct()
     {
         $this->posts = new ArrayCollection();
@@ -278,6 +283,16 @@ class User implements UserInterface, Serializable
     public function setEnabled(bool $enabled): void
     {
         $this->enabled = $enabled;
+    }
+
+    public function getPreferences(): UserPreferences
+    {
+        return $this->preferences;
+    }
+
+    public function setPreferences(UserPreferences $preferences): void
+    {
+        $this->preferences = $preferences;
     }
 
 }

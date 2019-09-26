@@ -8,7 +8,7 @@
     {% endfor %}
 
     {% if usersToFollow|length > 0 %}
-        <p>You currently fo not follow anyone, you might find these users interesting: </p>
+        <p>You currently do not follow anyone, you might find these users interesting: </p>
 
         {% for userToFollow in usersToFollow %}
             <a href="{{ path('following_follow', {"id": userToFollow.id}) }}">
