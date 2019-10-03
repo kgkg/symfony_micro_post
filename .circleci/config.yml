@@ -13,7 +13,7 @@ jobs:
         environment:
           MYSQL_ROOT_PASSWORD: 'root'
           MYSQL_DATABASE: micro-post
-      - image: cicleci/node:chakracore-10.13
+      - image: circleci/node:chakracore-10.13
     steps:
       - checkout
       - run:
