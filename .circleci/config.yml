@@ -45,6 +45,11 @@ jobs:
     working_directory: ~/micropost
     docker:
       - image: circleci/php:7.3.9-apache-buster
+        environment:
+          APP_ENV: prod
+          DATABASE_URL: mysql://kg:dupa.tam@127.0.0.1:3306/micro-post
+          MAILER_URL: smtp://82f41431fc8029:fdcf7a6746105d@smtp.mailtrap.io:25
+          MAILER_FROM: micro@micropost.com
       - image: circleci/node:9.11.2
     steps:
       - checkout
