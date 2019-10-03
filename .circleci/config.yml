@@ -69,7 +69,7 @@ jobs:
           command: yarn install && yarn run encore production
       - run:
           name: Install Rsync
-          command: apt install -y rsync
+          command: sudo apt install -y rsync
       - run:
           name: Add droplet
           command: ssh-keyscan -H $DROPLET_IP >> ~/.ssh/known_hosts
