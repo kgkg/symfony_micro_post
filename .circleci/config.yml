@@ -63,7 +63,7 @@ jobs:
           command: php bin/console cache:clear --env=prod --no-interaction
       - run:
           name: Install NodeJs and Yarn
-          command: chmod 700 deploy/install_yarn.sh && ./deploy/install_yarn.sh
+          command: chmod 700 bin/deploy/install_yarn.sh && bin/deploy/install_yarn.sh
       - run:
           name: Install Encore using yarn
           command: yarn install && yarn run encore production
