@@ -78,7 +78,7 @@ jobs:
           command: ssh -T $DROPLET_USER@$DROPLET_IP < bin/deploy/pre_deploy.sh
       - run:
           name: Deploy code
-          command: rsync -vzcrSLhp --delete ~/micropost/ $DROPLET_USER@DROPLET_IP:/var/www/micropost_current
+          command: rsync -vzcrSLhp --delete ~/micropost/ $DROPLET_USER@$DROPLET_IP:/var/www/micropost_current
       - run:
           name: Post deploy
           command: ssh -T $DROPLET_USER@$DROPLET_IP < bin/deploy/deploy.sh
