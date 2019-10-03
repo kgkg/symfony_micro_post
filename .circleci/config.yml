@@ -49,6 +49,9 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Create empty .env file, required by Symfony
+          command: touch .env
+      - run:
           name: Composer install
           command: composer install -n --prefer-dist
       - run:
@@ -65,7 +68,7 @@ jobs:
           command: ssh -T $DROPLET_USER:$DROPLET_IP < bin/deploy/pre_deploy.sh
       - run:
           name: Deploy code
-          command: rsync -vzcrSLhp --exclude '.env' --delete ~/micropost/ $DROPLET_USER@DROPLET_IP:/var/www/micropost_current
+          command: rsync -vzcrSLhp --delete ~/micropost/ $DROPLET_USER@DROPLET_IP:/var/www/micropost_current
       - run:
           name: Post deploy
           command: ssh -T $DROPLET_USER:$DROPLET_IP < bin/deploy/deploy.sh
